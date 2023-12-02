@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Chatting app</string>
+    <string name="screen1">Chatting App</string>
+    <string name="screen2">Send everything for Free</string>
+    <string name="screen3">Connect to everyone</string>
+
+    <string name="screen1Desc">A platform provides instant messaging capabilities, allowing users to send and receive messages in real-time. </string>
+    <string name="screen2Desc">Easily share photos and videos with others through a messaging.</string>
+    <string name="screen3Desc">Discover the world of communication and connection with a simple and feature-rich chatting app.
+</string>
+
+    <string name="startDesc">Discover the world of communication and connection with a simple and feature-rich chatting app.</string>
+    <string name="image">image</string>
+    <string name="log_in">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password_msg">Don\'t worry! Please enter the email address associated with your account.</string>
+    <string name="on_submit_msg">Check out your mailbox, you will receive an email containing link where you can reset your password</string>
+    <string name="default_web_client_id">600037128461-0c9huamvkllg110ij619cmb5mt1cnb7v.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

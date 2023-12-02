@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:flow_horizontalAlign="center">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/sliderImage"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/chatting"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sliderTitle"
+        android:layout_marginTop="50dp"
+        android:text="CHATTING APP"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/lavender"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sliderDesc"
+        android:layout_marginTop="20dp"
+        android:text="@string/screen1Desc"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/lavender_f"
+        android:fontFamily="@font/poppins_semibold"/>
+</LinearLayout>

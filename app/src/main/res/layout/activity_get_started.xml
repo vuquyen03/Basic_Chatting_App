@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".authentication.GetStarted"
+    android:orientation="vertical"
+    app:flow_horizontalAlign="center">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/explore"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Exploring App"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/lavender"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/startDesc"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/lavender_f"
+        android:fontFamily="@font/poppins_semibold"/>
+
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:text="Get Started"
+        android:id="@+id/getStartedButton"
+        android:padding="8dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="16dp"
+        android:layout_gravity="center"
+        app:cornerRadius="15dp"/>
+</LinearLayout>
