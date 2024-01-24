@@ -1,4 +1,4 @@
-package com.example.chattingapp.authentication
+package com.example.chattingapp.ui.auth
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,7 @@ import android.view.View
 import com.example.chattingapp.MainActivity
 import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.ActivitySetupInformationBinding
+import com.example.chattingapp.ui.base.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -18,7 +19,7 @@ class SetupInformation : BaseActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var storage: FirebaseStorage
-    private lateinit var selectedPicture: Uri
+    private var selectedPicture: Uri ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,6 @@ class SetupInformation : BaseActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        val uid = auth.currentUser?.uid
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
         supportActionBar?.hide()
@@ -35,22 +35,32 @@ class SetupInformation : BaseActivity() {
         }
 
         binding.btnDone.setOnClickListener{
+            showProgressBar()
             val name = binding.etUsername.text.toString().trim()
             val bio = binding.etBio.text.toString().trim()
-            if (selectedPicture != null){
+            if (name.isEmpty()){
+                hideProgressBar()
+                showToast(this, "Name is required")
+            } else if (bio.isEmpty()){
+                hideProgressBar()
+                showToast(this, "Bio is required")
+            } else if (selectedPicture != null){
                 val reference = storage.reference.child("Profile")
                     .child(auth.uid!!)
 
-                reference.putFile(selectedPicture).addOnCompleteListener { task ->
+
+                reference.putFile(selectedPicture!!).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+//                        showToast(this, "SuccessFul")
                         reference.downloadUrl.addOnCompleteListener { uri ->
                             val imageUri = uri.toString()
                             val uid = auth.uid
                             val user = User(uid, name, bio, imageUri)
-                            database.reference.child("Users")
+                            database.reference.child("users")
                                 .child(uid!!)
                                 .setValue(user)
                                 .addOnCompleteListener{
+                                    hideProgressBar()
                                     val intent = Intent(this, MainActivity::class.java)
                                     startActivity(intent)
                                     finish()
@@ -63,18 +73,18 @@ class SetupInformation : BaseActivity() {
                         database.reference.child("users")
                             .child(uid!!)
                             .setValue(user)
-                            .addOnCompleteListener{
+                            .addOnCanceledListener{
+                                hideProgressBar()
+                                showToast(this, "Failed")
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
                     }
                 }
-            }
-            if (name.isEmpty()){
-                showToast(this, "Name is required")
-            } else if (bio.isEmpty()){
-                showToast(this, "Bio is required")
+            } else if (selectedPicture == null) {
+                hideProgressBar()
+                showToast(this, "Image is required")
             }
 //            } else {
 //                showProgressBar()
@@ -106,28 +116,29 @@ class SetupInformation : BaseActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
-        startActivityForResult(intent, 0)
+        startActivityForResult(intent, 100)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
             // Khi chọn ảnh thành công
             binding.addImage.visibility = View.GONE
         }
 
         if (data != null) {
             if(data.data != null){
-                val uri = data.data
-                val storage = FirebaseStorage.getInstance()
+                showProgressBar()
+                selectedPicture = data.data
                 val time = Date().time
                 val reference = storage.reference.child("Profile")
                     .child(time.toString() +"")
-                reference.putFile(uri!!)
+                reference.putFile(selectedPicture!!)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful){
-                            reference.downloadUrl.addOnSuccessListener {uri ->
+                            reference.downloadUrl.addOnCompleteListener {uri ->
+                                hideProgressBar()
                                 val filePath = uri.toString()
                                 val obj = HashMap<String,Any>()
                                 obj["image"] = filePath
@@ -139,9 +150,11 @@ class SetupInformation : BaseActivity() {
                                     }
                             }
                         }
+                        else {
+                            showToast(this, "Failed to Upload Image")
+                        }
                     }
-                binding.imageProfile.setImageURI(uri)
-                selectedPicture = uri
+                binding.imageProfile.setImageURI(selectedPicture)
             }
         }
     }

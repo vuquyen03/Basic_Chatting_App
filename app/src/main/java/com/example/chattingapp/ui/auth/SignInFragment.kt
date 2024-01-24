@@ -1,10 +1,11 @@
 package com.example.chattingapp.ui.auth
-
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.chattingapp.MainActivity
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentSignInBinding
 import com.example.chattingapp.ui.base.BaseFragment
+import com.example.chattingapp.util.Constants
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -26,10 +28,12 @@ import com.google.firebase.ktx.Firebase
 
 
 class SignInFragment : BaseFragment() {
+
     private val googleSignInRequestCode = 234
     private lateinit var binding: FragmentSignInBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +43,14 @@ class SignInFragment : BaseFragment() {
         // Initialize Firebase Auth
         auth = Firebase.auth
         mAuth = FirebaseAuth.getInstance()
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val isLoggedIn = sharedPreferences.getBoolean(Constants.LOGIN_KEY, false)
+        if (isLoggedIn){
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            requireActivity().startActivity(intent)
+            requireActivity().finish()
+        }
 
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
@@ -65,6 +77,7 @@ class SignInFragment : BaseFragment() {
                 .addOnCompleteListener{ task ->
                     if(task.isSuccessful){
                         hideProgressBar()
+                        autoLogin(true, email)
                         val intent = Intent(requireActivity(), MainActivity::class.java)
                         requireActivity().startActivity(intent)
                         requireActivity().finish()
@@ -119,17 +132,28 @@ class SignInFragment : BaseFragment() {
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount){
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        showProgressBar()
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()){ task ->
                 if(task.isSuccessful){
+                    hideProgressBar()
+                    autoLogin(true, account.email!!)
                     showToast(this, "Login Successful")
                     val intent = Intent(requireActivity(), MainActivity::class.java)
                     requireActivity().startActivity(intent)
                     requireActivity().finish()
                 }else{
+                    hideProgressBar()
                     showToast(this, "Login Failed")
                 }
             }
+    }
+
+    private fun autoLogin(value: Boolean, email: String){
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(Constants.LOGIN_KEY, value)
+        editor.putString(Constants.EMAIL_KEY, email)
+        editor.apply()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

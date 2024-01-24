@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.chattingapp.R
-import com.example.chattingapp.authentication.SetupInformation
 import com.example.chattingapp.databinding.FragmentSignUpBinding
 import com.example.chattingapp.ui.base.BaseFragment
 import com.google.firebase.auth.FirebaseAuth

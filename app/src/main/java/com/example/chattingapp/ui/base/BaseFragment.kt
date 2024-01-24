@@ -12,7 +12,7 @@ import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentBaseBinding
 
 open class BaseFragment : Fragment() {
-    private lateinit var pb: Dialog
+    private var pb: Dialog? = null
     private lateinit var binding: FragmentBaseBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,18 +24,25 @@ open class BaseFragment : Fragment() {
     }
 
     fun showProgressBar(){
-        pb = Dialog(requireContext())
-        pb.setContentView(R.layout.progress_bar)
-        pb.setCancelable(false)
-        pb.show()
+        if(isAdded){
+            pb = Dialog(requireContext())
+            pb?.setContentView(R.layout.progress_bar)
+            pb?.setCancelable(false)
+            pb?.show()
+        }
     }
 
     fun hideProgressBar(){
-        pb.hide()
-    }
+        pb?.hide()    }
 
     fun showToast(fragment: Fragment, msg: String){
         Toast.makeText(fragment.requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // Đóng Dialog khi View của Fragment bị hủy
+        pb?.dismiss()
+    }
 }

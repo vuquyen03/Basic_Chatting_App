@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:scrollbars="none"
-    tools:context=".authentication.SetupInformation">
+    tools:context=".ui.auth.SetupInformation">
 
     <LinearLayout
         android:layout_width="match_parent"

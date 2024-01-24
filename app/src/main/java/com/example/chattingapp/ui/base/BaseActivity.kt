@@ -1,4 +1,4 @@
-package com.example.chattingapp.authentication
+package com.example.chattingapp.ui.base
 
 import android.app.Activity
 import android.app.Dialog
@@ -31,5 +31,18 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showToast(activity: Activity, msg: String){
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    // Phương thức tùy chỉnh để giải phóng tài nguyên trước khi Activity kết thúc
+    open fun onDestroyCustom() {
+        // Giải phóng Dialog nếu đang hiển thị
+        if (::pb.isInitialized && pb.isShowing) {
+            pb.dismiss()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onDestroyCustom()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.chattingapp.authentication
+package com.example.chattingapp.ui.auth
 
 import android.content.Context
 import android.view.LayoutInflater

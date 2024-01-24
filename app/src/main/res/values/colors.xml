@@ -12,6 +12,7 @@
     <color name="grey_1">#C3C2C4</color>
     <color name="grey_2">#EBE7EB</color>
     <color name="lavender_f">#8692f7</color>
+    <color name="lavender_f_1">#98A0DF</color>
 
     <color name="blue_1">#BFD6F6</color>
     <color name="blue_2">#8DBDFF</color>
@@ -20,4 +21,5 @@
     <color name="blue_5">#3B7DD8</color>
 
     <color name="orange_1">#F14436</color>
+    <color name="black_1">#222020</color>
 </resources>
