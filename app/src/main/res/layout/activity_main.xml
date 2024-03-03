@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/lavender_f_1"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageProfile"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/background_icon"
@@ -22,8 +22,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageLogout"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/background_icon"
@@ -43,11 +43,34 @@
         android:gravity="center"
         android:maxLines="1"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/imageProfile"
         app:layout_constraintBottom_toBottomOf="@id/imageProfile"
         app:layout_constraintStart_toEndOf="@id/imageProfile"
         app:layout_constraintEnd_toStartOf="@id/imageLogout"/>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_content_bottom"
+        app:layout_constraintTop_toBottomOf="@id/imageProfile"
+        app:layout_constraintBottom_toBottomOf="parent">
+        
+    </FrameLayout>
+    
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNewChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="New Chat"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/lavender_f_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

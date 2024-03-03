@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.chattingapp.R
-import com.example.chattingapp.SignInActivity
+import com.example.chattingapp.activities.SignInActivity
 import com.example.chattingapp.databinding.ActivityOnboardingBinding
 
 

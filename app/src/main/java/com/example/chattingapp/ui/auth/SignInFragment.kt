@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.chattingapp.MainActivity
+import com.example.chattingapp.activities.MainActivity
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentSignInBinding
 import com.example.chattingapp.ui.base.BaseFragment

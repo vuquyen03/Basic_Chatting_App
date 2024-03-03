@@ -2,16 +2,23 @@ package com.example.chattingapp.ui.auth
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
-import com.example.chattingapp.MainActivity
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.chattingapp.activities.MainActivity
 import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.ActivitySetupInformationBinding
 import com.example.chattingapp.ui.base.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import java.io.FileNotFoundException
+import java.io.InputStream
 import java.util.Date
 
 class SetupInformation : BaseActivity() {
@@ -19,7 +26,9 @@ class SetupInformation : BaseActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var storage: FirebaseStorage
+    private lateinit var encodedImage: String
     private var selectedPicture: Uri ?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,6 +164,32 @@ class SetupInformation : BaseActivity() {
                         }
                     }
                 binding.imageProfile.setImageURI(selectedPicture)
+            }
+        }
+    }
+
+    private fun encodeImage(bitmap: Bitmap): String {
+        val previewWidth = 150
+        val previewHeight = bitmap.height * previewWidth / bitmap.width
+        val previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false)
+        val byteArrayOutputSteam = java.io.ByteArrayOutputStream()
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputSteam)
+        val bytes = byteArrayOutputSteam.toByteArray()
+        return Base64.encodeToString(bytes, Base64.DEFAULT)
+    }
+
+    private val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri: Uri? = result.data?.data
+            // Sử dụng Uri để tải ảnh
+            try {
+                val inputStream: InputStream? = contentResolver.openInputStream(imageUri!!)
+                val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
+                binding.imageProfile.setImageBitmap(bitmap)
+                binding.addImage.visibility = View.GONE
+                encodedImage = encodeImage(bitmap!!)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
             }
         }
     }

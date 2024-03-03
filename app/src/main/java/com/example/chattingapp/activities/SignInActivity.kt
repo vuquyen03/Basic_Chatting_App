@@ -1,9 +1,10 @@
-package com.example.chattingapp
+package com.example.chattingapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.chattingapp.R
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var navController: NavController
