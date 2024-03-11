@@ -85,7 +85,6 @@ class Onboarding : AppCompatActivity() {
             finish()
         }
 
-//        slideViewPager = findViewById(R.id.slideViewPage)
         dotIndicator = binding.dotIndicator
 
         setDotIndicator(0)

@@ -61,12 +61,28 @@
         android:gravity="center"
         android:maxLines="1"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/imageBack"
         app:layout_constraintEnd_toStartOf="@id/imageInfo"
         app:layout_constraintStart_toEndOf="@id/imageBack"
         app:layout_constraintTop_toTopOf="@id/imageBack"/>
+    
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/green"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/textName"
+        app:layout_constraintStart_toStartOf="@id/textName"
+        app:layout_constraintTop_toBottomOf="@id/textName"/>
 
     <View
         android:id="@+id/viewSupporter"

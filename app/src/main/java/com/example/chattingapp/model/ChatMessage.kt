@@ -2,12 +2,14 @@ package com.example.chattingapp.model
 
 import java.util.Date
 
-class ChatMessage() {
+class ChatMessage(){
     var message: String? = null
     var senderID: String? = null
     var receiverId: String? = null
     var dateTime: String? = null
     var dateObject: Date? = null
+    var conversionId: String? = null
+    var conversionName: String? = null
 
     constructor(
         message: String?,

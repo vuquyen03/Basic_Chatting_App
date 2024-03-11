@@ -45,4 +45,5 @@ open class BaseActivity : AppCompatActivity() {
         super.onDestroy()
         onDestroyCustom()
     }
+
 }

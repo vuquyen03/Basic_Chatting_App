@@ -12,8 +12,6 @@ import com.example.chattingapp.databinding.ActivityUsersBinding
 import com.example.chattingapp.listeners.UserListener
 import com.example.chattingapp.model.User
 import com.example.chattingapp.util.Constants
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import com.google.firebase.database.FirebaseDatabase
 
 class UsersActivity : AppCompatActivity(), UserListener {
@@ -41,15 +39,14 @@ class UsersActivity : AppCompatActivity(), UserListener {
         loading(true)
         val database = FirebaseDatabase.getInstance().reference
         val userRef = database.child("users")
-        userRef.get().addOnCompleteListener(){
+        userRef.get().addOnCompleteListener{
             if(it.isSuccessful){
                 val list = ArrayList<User>()
-                val auth = Firebase.auth
                 for(user in it.result!!.children){
                     val customer = user.getValue(User::class.java)
-                    if(customer!!.uid != auth.uid){
+                    if(customer!!.uid != sharedPreferences.getString(Constants.KEY_USER_ID, null)){
                         list.add(customer)
-                        Log.d("TAG", "getUsers: ${customer.username}")
+//                        Log.d("TAG", "getUsers: ${customer.username}")
                     }
                 }
                 if(list.size > 0){
@@ -58,7 +55,6 @@ class UsersActivity : AppCompatActivity(), UserListener {
                 }else{
                     showErrorMessage()
                 }
-                Log.d("TAG", "getUsers: ${list.size}")
             }else{
                 showErrorMessage()
             }
@@ -84,6 +80,6 @@ class UsersActivity : AppCompatActivity(), UserListener {
         val intent = Intent(this, ChatActivity::class.java)
         intent.putExtra(Constants.KEY_USER, user)
         startActivity(intent)
-        finish()
+//        finish()
     }
 }

@@ -19,13 +19,6 @@ class ChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private val VIEW_TYPE_SENT = 1
     private val VIEW_TYPE_RECEIVED = 2
 
-//    constructor(chatMessages: List<ChatMessage>, senderID: String?) {
-//        if (senderID != null) {
-//            this.senderID = senderID
-//        }
-//        this.chatMessages = chatMessages
-//    }
-
     constructor(chatMessages: MutableList<ChatMessage>, receiver: User, senderID: String?) {
         if (senderID != null) {
             this.senderID = senderID
@@ -81,13 +74,13 @@ class ChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     binding.imageProfile.setImageBitmap(bitmap)
                 }
                 .addOnFailureListener { exception ->
-                    // Xử lý lỗi khi không thể tải ảnh
                     exception.printStackTrace()
                 }
         }
     }
 
-    class SentMessageViewHolder(private val binding: ItemContainerSentMessageBinding) : RecyclerView.ViewHolder(binding.root) {
+    class SentMessageViewHolder(private val binding: ItemContainerSentMessageBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun setData(chatMessage: ChatMessage) {
             binding.textMessage.text = chatMessage.message
             binding.textDateTime.text = chatMessage.dateTime

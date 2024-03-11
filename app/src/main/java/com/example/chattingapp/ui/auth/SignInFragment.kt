@@ -78,6 +78,7 @@ class SignInFragment : BaseFragment() {
                     if(task.isSuccessful){
                         hideProgressBar()
                         autoLogin(true, email)
+                        sharedPreferences.edit().putString(Constants.KEY_USER_ID, auth.uid).apply()
                         val intent = Intent(requireActivity(), MainActivity::class.java)
                         requireActivity().startActivity(intent)
                         requireActivity().finish()
